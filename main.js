@@ -22,7 +22,7 @@ function iterateVideos(){
 }
 
 function Main() {
-  fs.readFile('./input.txt', (input) => {
+  fs.readFile('./DataAccess/Data/kittens.in', 'utf-8', (err, input) => {
     objectsModel = parse(input);
 
     while (true) {
