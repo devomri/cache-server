@@ -70,12 +70,11 @@ function Main() {
 
     let data = cacheCount + "\n";
 
-    for (c = 0; objectsModel.caches.length; c++) {
-      const cache = objectsModel.caches[c];
+    objectsModel.caches.forEach((cache) => {
       if(cache.videos.length !== 0){
         data += cache.ID + " " + cache.videos.map((video) => video.ID).join(" ") + "\n";
       }
-    }
+    });
 
     fs.writeFile("./ouput.txt", data, () => {
       console.log("done");
