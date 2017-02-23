@@ -25,6 +25,10 @@ function Main() {
   fs.readFile('./input.txt', (input) => {
     objectsModel = parse(input);
 
+    objectsModel.SortedVideos = objectsModel.requests.sort((videoA, videoB) => {
+
+    });
+
     while (true) {
 
       iterateVideos();

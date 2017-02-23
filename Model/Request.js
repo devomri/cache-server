@@ -3,8 +3,8 @@
  */
 
 class Request {
-    constructor(ID, endpointID, iterations) {
-        this.ID = ID;
+    constructor(videoID, endpointID, iterations) {
+        this.videoID = videoID;
         this.endpointID = endpointID;
         this.iterations = iterations;
     }

@@ -3,7 +3,7 @@
  */
 
 class Cache {
-    constructor(ID, cpacity) {
+    constructor(ID, capacity) {
         this.ID = ID;
         this.capacity = capacity;
         this.avaiableCapacity = capacity;
