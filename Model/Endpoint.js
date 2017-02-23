@@ -3,6 +3,8 @@
  */
 
 class Endpoint {
-    // ID
-    // list - CacheLatency
+    constructor(ID, cacheLatencyList) {
+        this.ID = ID;
+        this.cacheLatencyList = cacheLatencyList;
+    }
 }

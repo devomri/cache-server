@@ -4,6 +4,7 @@
 
 class Video {
     constructor(ID, size){
-        this.ID = ID
+        this.ID = ID;
+        this.size = size;
     }
 }

@@ -2,7 +2,9 @@
  * Created by omri on 2/23/17.
  */
 
-function CacheLatency() {
-    // Cache ID
-    // Latency
+class CacheLatency() {
+    constructor(cacheID, latency) {
+        this.cacheID = cacheID;
+        this.latency = latency;
+    }
 }
