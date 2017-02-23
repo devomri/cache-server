@@ -25,10 +25,18 @@ module.exports = function(input) {
 
     let lineIndex = 1;
     let currLine;
+
+    for (let c = 0; c < cahceNumber; c++) {
+      caches.push(new Cache(c, chacheSize));
+    }
+
+    let endpointsByCache = [];
+
     for (let e = 0; e < endpointsNumber; e++) {
         lineIndex++;
         currLine = lines[lineIndex].split(" ");
-        endpoints[e] = new Endpoint(e, currLine[0]);
+        const endpoint = new Endpoint(e, currLine[0]);
+        endpoints[e] = endpoint;
 
         let numberOfConnectedCaches = currLine[1];
         let cacheLatencyArray = [];
@@ -38,11 +46,16 @@ module.exports = function(input) {
             let cacheId = currLine[0];
             let latency = currLine[1];
             cacheLatencyArray.push(new CacheLatency(cacheId, latency));
+
+            endpointsByCache[cacheId] = endpointsByCache[cacheId] || [];
+            endpointsByCache[cacheId].push(endpoint);
         }
 
         endpoints[e].cacheLatencyList = cacheLatencyArray;
     }
 
+    let requestByVideo = [];
+    let endpointsByVideo = [];
     // Read requests
     for (let r = 0; r < requestDescriptorsNumber; r++){
         lineIndex++;
@@ -50,49 +63,29 @@ module.exports = function(input) {
         let videoId = currLine[0];
         let endpointId = currLine[1];
         let requestsNumber = currLine[2];
-        requests.push(new Request(videoId, endpointId, requestsNumber));
-    }
 
-    for (let c = 0; c < cahceNumber; c++) {
-        caches.push(new Cache(c, chacheSize));
+        requestByVideo[videoId] = requestByVideo[videoId] || [];
+        endpointsByVideo[videoId] = endpointsByVideo[videoId] || [];
+
+        let req = new Request(videoId, endpointId, requestsNumber);
+        requests.push(req);
+        requestByVideo[videoId].push(req);
+        endpointsByVideo[videoId].push(endpoints[endpointId]);
     }
 
     // Create return object
-    let requestByVideo = [];
-    for(let v = 0; v < videos.length; v++) {
-        let currVideoId = videos[v].ID;
-        requestByVideo[currVideoId] = [];
-
-        for (r = 0; r < requests.length; r++) {
-            if (requests[r].videoID == currVideoId) {
-                requestByVideo[currVideoId].push(requests[r])
-            }
-        }
-    }
-    
-    let endpointsByCache = [];
-    for (let c = 0; c < caches.length; c++) {
-        let currCacheId = caches[c].ID;
-        endpointsByCache[currCacheId] = [];
-        
-        for (let e = 0; e < endpoints.length; e++) {
-            if (endpoints[e].cacheID == currCacheId) {
-                endpointsByCache[currCacheId].push(endpoints[e]);
-            }
-        }
-    }
-    
-    let endpointsByVideo = [];
-    for (v = 0; v < videos.length; v++) {
-        let currVideoId = videos[v].ID;
-        endpointsByVideo[currVideoId] = [];
-        
-        for (let e = 0; e < endpoints.length; e++) {
-            if (endpoints[e].videoID == currVideoId) {
-                endpointsByVideo[currVideoId].push(endpoints[e]);
-            }
-        }
-    }
+    //
+    // let endpointsByVideo = [];
+    // for (v = 0; v < videos.length; v++) {
+    //     let currVideoId = videos[v].ID;
+    //     endpointsByVideo[currVideoId] = [];
+    //
+    //     for (let e = 0; e < endpoints.length; e++) {
+    //         if (endpoints[e].videoID == currVideoId) {
+    //             endpointsByVideo[currVideoId].push(endpoints[e]);
+    //         }
+    //     }
+    // }
 
     return {
         requestByVideo,
