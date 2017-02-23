@@ -91,6 +91,7 @@ module.exports = function(input) {
         requestByVideo,
         endpointsByCache,
         endpointsByVideo,
-        videos
+        videos,
+        caches
     };
 };

@@ -44,7 +44,7 @@ function Main() {
   fs.readFile('./DataAccess/Data/kittens.in', 'utf-8', (err, input) => {
     objectsModel = parse(input);
 
-    objectsModel.sortedVideos = new Array(...objectsModel.videoes).sort((videoA, videoB) => {
+    objectsModel.sortedVideos = new Array(...objectsModel.videos).sort((videoA, videoB) => {
       const videoATotalRequests = objectsModel.requestsByVideo[videoA.ID].reduce((total, request) => request.iterations + total, 0);
       const videoBTotalRequests = objectsModel.requestsByVideo[videoB.ID].reduce((total, request) => request.iterations + total, 0);
       return videoATotalRequests - videoBTotalRequests;
@@ -57,6 +57,10 @@ function Main() {
       if(!wasVideoAdd) {
         break;
       }
+    }
+
+    for (c = 0; objectsModel.caches.length; c++) {
+      console.log(objectsModel.caches[c].videos)
     }
   })
 
