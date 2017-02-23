@@ -45,13 +45,13 @@ function Main() {
     objectsModel = parse(input);
 
     objectsModel.sortedVideos = new Array(...objectsModel.videos).sort((videoA, videoB) => {
-      const videoATotalRequests = objectsModel.requestsByVideo[videoA.ID].reduce((total, request) => request.iterations + total, 0);
-      const videoBTotalRequests = objectsModel.requestsByVideo[videoB.ID].reduce((total, request) => request.iterations + total, 0);
+      const videoATotalRequests = (objectsModel.requestByVideo[videoA.ID] || []).reduce((total, request) => request.iterations + total, 0);
+      const videoBTotalRequests = (objectsModel.requestByVideo[videoB.ID] || []).reduce((total, request) => request.iterations + total, 0);
       return videoATotalRequests - videoBTotalRequests;
     });
 
     while (true) {
-
+      wasVideoAdd = false;
       iterateVideos();
 
       if(!wasVideoAdd) {
@@ -59,9 +59,27 @@ function Main() {
       }
     }
 
+
+    const cacheCount = objectsModel.caches.reduce((caches, cache) => {
+      if(cache.videos.length === 0){
+        return caches;
+      }
+      return caches + 1;
+
+    }, 0);
+
+    let data = cacheCount + "\n";
+
     for (c = 0; objectsModel.caches.length; c++) {
-      console.log(objectsModel.caches[c].videos)
+      const cache = objectsModel.caches[c];
+      if(cache.videos.length !== 0){
+        data += cache.ID + " " + cache.videos.map((video) => video.ID).join(" ") + "\n";
+      }
     }
+
+    fs.writeFile("./ouput.txt", data, () => {
+      console.log("done");
+    })
   })
 
 }
