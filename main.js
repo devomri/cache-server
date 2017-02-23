@@ -1,6 +1,8 @@
-/**
- * Created by omri on 2/23/17.
- */
+const fs = require('fs');
+const parse = require('./parser');
+
+let wasVideoAdd = false;
+let objectsModel = {};
 
 function iterateCaches() {
   // try to put the video on that cache
@@ -20,15 +22,19 @@ function iterateVideos(){
 }
 
 function Main() {
-  var wasVideoAdd = false;
-  while (true) {
+  fs.readFile('./input.txt', (input) => {
+    objectsModel = parse(input);
 
-    iterateVideos();
+    while (true) {
 
-    if(!wasVideoAdd) {
-      break;
+      iterateVideos();
+
+      if(!wasVideoAdd) {
+        break;
+      }
     }
-  }
+  })
+
 }
 
 Main();
