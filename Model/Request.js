@@ -9,3 +9,5 @@ class Request {
         this.iterations = iterations;
     }
 }
+
+module.exports = Request;

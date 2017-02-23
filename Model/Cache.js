@@ -15,3 +15,5 @@ class Cache {
         this.videos.push(video);
     }
 }
+
+module.exports = Cache;
