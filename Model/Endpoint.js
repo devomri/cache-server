@@ -3,8 +3,11 @@
  */
 
 class Endpoint {
-    constructor(ID, cacheLatencyList) {
+    constructor(ID, datacenterLatency) {
         this.ID = ID;
-        this.cacheLatencyList = cacheLatencyList;
+        this.datacenterLatency = datacenterLatency;
+        this.cacheLatencyList = [];
     }
 }
+
+module.exports = Endpoint;

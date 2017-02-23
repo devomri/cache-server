@@ -8,3 +8,5 @@ class CacheLatency {
         this.latency = latency;
     }
 }
+
+module.exports = CacheLatency;

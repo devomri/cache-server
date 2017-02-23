@@ -8,3 +8,5 @@ class Video {
         this.size = size;
     }
 }
+
+module.exports = Video;
