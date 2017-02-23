@@ -8,4 +8,10 @@ class Cache {
         this.capacity = capacity;
         this.avaiableCapacity = capacity;
     }
+
+    add(video) {
+        this.avaiableCapacity -= video.size;
+        this.videos = this.videos || [];
+        this.videos.push(video);
+    }
 }
